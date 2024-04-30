@@ -16,7 +16,6 @@ app.use(express.json());
 
 // Serve static files from the React app
 if (process.env.NODE_ENV === 'production') {
-  // Notice the change here to '../client/dist' since server.js is in the server folder
   app.use(express.static(path.join(__dirname, '../client/dist')));
 
   // The "catchall" handler: for any request that does not
@@ -34,6 +33,7 @@ const server = new ApolloServer({
     const user = getUserFromToken(token);
     return { user };
   },
+  persistedQueries: false, // Disable persisted queries or configure a cache
 });
 
 async function startServer() {
